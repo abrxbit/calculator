@@ -1,0 +1,68 @@
+/* ===== Page background ===== */
+body {
+    margin: 0;
+    height: 100vh;
+    background: #bfbfbf; /* grey background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial;
+}
+
+/* ===== Calculator box ===== */
+.calculator {
+    width: 280px;
+    padding: 20px;
+    background: black;
+    border-radius: 25px;
+    border: 3px solid #555; /* visible border */
+}
+
+/* ===== Display ===== */
+#display {
+    height: 80px;
+    color: white;
+    font-size: 42px;
+    text-align: right;
+    padding: 20px;
+}
+
+/* ===== Buttons layout ===== */
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+/* ===== All buttons ===== */
+button {
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+}
+
+/* ===== Orange operator buttons ===== */
+.orange {
+    background: orange;
+}
+
+/* ===== Grey top buttons ===== */
+.gray {
+    background: #a5a5a5;
+    color: black;
+}
+
+/* ===== Zero button ===== */
+.zero {
+    grid-column: span 2;
+    border-radius: 35px;
+}
+
+/* ===== Simple hover effect ===== */
+button:hover {
+    opacity: 0.85;
+}
