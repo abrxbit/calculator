@@ -1,95 +1,2829 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aesthetic 3D Calculator</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="style.css" />
+<title>Aesthetic 3D Calculator</title>
+
+<style>
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+
+    /* DARK CALCULATOR */
+
+    --calc-bg-1: #303030;
+    --calc-bg-2: #292929;
+    --calc-bg-3: #242424;
+
+    --key-bg-1: #313131;
+    --key-bg-2: #292929;
+    --key-bg-3: #212121;
+
+    --key-border: #111111;
+
+    --key-text: #ff9da5;
+
+    --toggle-bg: #202020;
+
+    --yellow: #ffd84d;
+
+    --display-text: #ffffff;
+}
+
+
+/* =====================================================
+   PAGE BACKGROUND
+===================================================== */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+
+    padding: 40px;
+
+    overflow: hidden;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+    /*
+       Light icy-blue background
+    */
+
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            #f1faff 0%,
+            #e0f1fa 43%,
+            #cfe7f3 100%
+        );
+}
+
+
+/* =====================================================
+   BIG BLUE CIRCLE
+===================================================== */
+
+body::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 620px;
+    height: 620px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #22a7eb 0%,
+            #0a94dc 37%,
+            #087fc4 70%,
+            #066fae 100%
+        );
+
+    box-shadow:
+        0 35px 75px
+        rgba(0, 105, 170, .20),
+
+        0 0 90px
+        rgba(0, 145, 220, .15);
+
+    z-index: 0;
+}
+
+
+/* =====================================================
+   AMBIENT BLUE GLOW
+===================================================== */
+
+body::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 760px;
+    height: 760px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(20, 150, 220, .14),
+            rgba(20, 150, 220, .05) 45%,
+            transparent 72%
+        );
+
+    filter: blur(18px);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+
+/* =====================================================
+   CALCULATOR BODY
+===================================================== */
+
+.calculator {
+
+    width: 445px;
+
+    position: relative;
+
+    z-index: 2;
+
+    padding:
+        22px
+        22px
+        29px;
+
+    border-radius: 48px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--calc-bg-1),
+            var(--calc-bg-2) 45%,
+            var(--calc-bg-3)
+        );
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    box-shadow:
+
+        0 34px 50px
+        rgba(0,0,0,.23),
+
+        0 13px 25px
+        rgba(0,0,0,.15),
+
+        inset
+        1px
+        1px
+        1px
+        rgba(255,255,255,.08),
+
+        inset
+        -2px
+        -2px
+        5px
+        rgba(0,0,0,.34);
+
+    transition:
+        background .65s
+        cubic-bezier(.22,.61,.36,1),
+
+        border-color .55s ease,
+
+        box-shadow .65s
+        cubic-bezier(.22,.61,.36,1);
+}
+
+
+/* =====================================================
+   DISPLAY
+===================================================== */
+
+.display {
+
+    height: 210px;
+
+    position: relative;
+
+    padding:
+        22px
+        36px
+        24px;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius:
+        30px
+        30px
+        11px
+        11px;
+
+    background:
+        linear-gradient(
+            160deg,
+            #050505,
+            #0b0b0b
+        );
+
+    box-shadow:
+
+        inset
+        0
+        3px
+        10px
+        rgba(0,0,0,.95),
+
+        inset
+        0
+        -1px
+        0
+        rgba(255,255,255,.04),
+
+        0
+        2px
+        5px
+        rgba(0,0,0,.4);
+}
+
+
+/* =====================================================
+   MOON / SUN WRAPPER
+===================================================== */
+
+.theme-icon-wrap {
+
+    width: 38px;
+    height: 38px;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =====================================================
+   THICK YELLOW MOON
+===================================================== */
+
+.moon-shape {
+
+    width: 25px;
+    height: 25px;
+
+    position: relative;
+
+    border-radius: 50%;
+
+    background:
+        var(--yellow);
+
+    box-shadow:
+
+        0 0 7px
+        rgba(255,216,77,.28),
+
+        0 0 13px
+        rgba(255,216,77,.12);
+
+    transform:
+        rotate(-13deg);
+
+    transition:
+        opacity .25s ease,
+        transform .5s
+        cubic-bezier(.34,1.56,.64,1);
+}
+
+
+/*
+   Dark cut-out makes
+   the moon crescent.
+*/
+
+.moon-shape::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background:
+        #080808;
+
+    top: -2px;
+    left: 9px;
+}
+
+
+/* =====================================================
+   SUN
+===================================================== */
+
+.sun-shape {
+
+    width: 20px;
+    height: 20px;
+
+    position: relative;
+
+    border-radius: 50%;
+
+    background:
+        var(--yellow);
+
+    box-shadow:
+        0 0 10px
+        rgba(255,216,77,.32);
+
+    transition:
+        opacity .25s ease,
+        transform .55s
+        cubic-bezier(.34,1.56,.64,1);
+}
+
+
+.sun-shape::before,
+.sun-shape::after {
+
+    content: "";
+
+    width: 32px;
+    height: 3px;
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    border-radius: 20px;
+
+    background:
+        var(--yellow);
+}
+
+
+.sun-shape::before {
+
+    transform:
+        translate(-50%, -50%);
+}
+
+
+.sun-shape::after {
+
+    transform:
+        translate(-50%, -50%)
+        rotate(90deg);
+}
+
+
+.sun-rays {
+
+    width: 32px;
+    height: 3px;
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    border-radius: 20px;
+
+    background:
+        var(--yellow);
+
+    transform:
+        translate(-50%, -50%)
+        rotate(45deg);
+}
+
+
+.sun-rays::after {
+
+    content: "";
+
+    width: 32px;
+    height: 3px;
+
+    position: absolute;
+
+    border-radius: 20px;
+
+    background:
+        var(--yellow);
+
+    transform:
+        rotate(90deg);
+}
+
+
+/* =====================================================
+   DISPLAY CONTENT
+===================================================== */
+
+.display-content {
+
+    width: 100%;
+
+    margin-top: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+/* =====================================================
+   HISTORY EQUATION
+===================================================== */
+
+.expression-history {
+
+    width: 100%;
+    min-height: 28px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    color: #969696;
+
+    font-size: 21px;
+    font-weight: 650;
+
+    letter-spacing: -.4px;
+
+    opacity: 0;
+
+    transform:
+        translateY(22px)
+        scale(.96);
+
+    transform-origin:
+        right center;
+
+    transition:
+
+        transform .45s
+        cubic-bezier(.22,.61,.36,1),
+
+        opacity .35s ease;
+}
+
+
+.expression-history.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* =====================================================
+   DISPLAY SEPARATOR
+===================================================== */
+
+.display-line {
+
+    width: 46%;
+    height: 2px;
+
+    margin:
+        5px
+        0
+        9px
+        auto;
+
+    border-radius: 50px;
+
+    background:
+        #505050;
+}
+
+
+/* =====================================================
+   MAIN DISPLAY
+===================================================== */
+
+.main-display {
+
+    width: 100%;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-align: right;
+
+    color:
+        var(--display-text);
+
+    font-size: 65px;
+
+    font-weight: 800;
+
+    line-height: 1;
+
+    letter-spacing: -2.5px;
+
+    transform-origin:
+        right bottom;
+
+    transition:
+
+        transform .3s
+        cubic-bezier(.22,.61,.36,1),
+
+        opacity .25s ease,
+
+        font-size .3s ease;
+}
+
+
+/*
+   While entering an equation,
+   slightly smaller.
+*/
+
+.main-display.expression-mode {
+
+    font-size: 46px;
+
+    font-weight: 720;
+
+    letter-spacing: -1.5px;
+}
+
+
+/*
+   Large result
+*/
+
+.main-display.result-mode {
+
+    font-size: 66px;
+
+    font-weight: 850;
+
+    animation:
+        resultAppear
+        .45s
+        cubic-bezier(.34,1.4,.64,1);
+}
+
+
+@keyframes resultAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(13px)
+            scale(.93);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =====================================================
+   MODE ROW
+===================================================== */
+
+.mode-row {
+
+    height: 65px;
+
+    padding-left: 9px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =====================================================
+   THEME SWITCH
+===================================================== */
+
+.toggle {
+
+    width: 75px;
+    height: 31px;
+
+    position: relative;
+
+    padding: 0;
+
+    border: 0;
+
+    border-radius:
+        999px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    background:
+        var(--toggle-bg);
+
+    box-shadow:
+
+        inset
+        3px
+        3px
+        7px
+        rgba(0,0,0,.70),
+
+        inset
+        -2px
+        -2px
+        4px
+        rgba(255,255,255,.04),
+
+        0
+        2px
+        4px
+        rgba(0,0,0,.45);
+
+    transition:
+        background .5s ease,
+        box-shadow .5s ease;
+}
+
+
+.toggle-knob {
+
+    width: 23px;
+    height: 23px;
+
+    position: absolute;
+
+    left: 5px;
+    top: 4px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #303030,
+            #151515
+        );
+
+    box-shadow:
+
+        2px
+        2px
+        5px
+        rgba(0,0,0,.75),
+
+        inset
+        1px
+        1px
+        1px
+        rgba(255,255,255,.10);
+
+    transition:
+
+        left .5s
+        cubic-bezier(.34,1.56,.64,1),
+
+        transform .5s
+        cubic-bezier(.34,1.56,.64,1),
+
+        background .5s ease,
+
+        box-shadow .5s ease;
+}
+
+
+.toggle-indicator {
+
+    width: 9px;
+    height: 6px;
+
+    position: absolute;
+
+    right: 11px;
+    top: 12px;
+
+    border-radius:
+        20px;
+
+    background:
+        #ef9299;
+
+    box-shadow:
+        0 0 7px
+        rgba(255,140,150,.7);
+
+    transition:
+        background .5s ease,
+        box-shadow .5s ease;
+}
+
+
+.toggle.active
+.toggle-knob {
+
+    left: 47px;
+
+    transform:
+        rotate(360deg);
+}
+
+
+.toggle.active
+.toggle-indicator {
+
+    background:
+        #5294ff;
+
+    box-shadow:
+        0 0 8px
+        rgba(82,148,255,.65);
+}
+
+
+/* =====================================================
+   MODE TEXT
+===================================================== */
+
+.mode-label {
+
+    color:
+        #a87479;
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        .15px;
+
+    transition:
+        color .5s ease;
+}
+
+
+/* =====================================================
+   KEYPAD
+===================================================== */
+
+.keypad {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    row-gap: 22px;
+
+    column-gap: 25px;
+}
+
+
+/* =====================================================
+   3D BUTTON
+===================================================== */
+
+.key {
+
+    width: 79px;
+    height: 79px;
+
+    justify-self: center;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        var(--key-border);
+
+    outline: none;
+
+    cursor: pointer;
+
+    user-select: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+
+        radial-gradient(
+
+            circle at 35% 27%,
+
+            var(--key-bg-1) 0%,
+
+            var(--key-bg-2) 50%,
+
+            var(--key-bg-3) 100%
+        );
+
+    color:
+        var(--key-text);
+
+    font-size:
+        34px;
+
+    font-weight:
+        750;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "Segoe UI",
+        sans-serif;
+
+    text-shadow:
+        0 0 4px
+        rgba(255,157,165,.23);
+
+    box-shadow:
+
+        0
+        5px
+        5px
+        rgba(0,0,0,.32),
+
+        inset
+        2px
+        2px
+        4px
+        rgba(255,255,255,.045),
+
+        inset
+        -3px
+        -4px
+        6px
+        rgba(0,0,0,.35),
+
+        0
+        0
+        0
+        1px
+        rgba(255,255,255,.025);
+
+    transition:
+
+        color .55s ease,
+
+        background .55s ease,
+
+        border-color .55s ease,
+
+        box-shadow .55s ease,
+
+        text-shadow .55s ease,
+
+        transform .1s ease;
+}
+
+
+/* =====================================================
+   HOVER
+===================================================== */
+
+@media (hover:hover) {
+
+    .key:hover {
+
+        transform:
+            translateY(-2px);
+    }
+}
+
+
+/* =====================================================
+   BUTTON PRESS
+===================================================== */
+
+.key:active,
+.key.pressed {
+
+    transform:
+        translateY(3px)
+        scale(.96);
+
+    transition-duration:
+        .07s;
+
+    box-shadow:
+
+        0
+        1px
+        2px
+        rgba(0,0,0,.45),
+
+        inset
+        3px
+        4px
+        7px
+        rgba(0,0,0,.45);
+}
+
+
+/* =====================================================
+   OPERATION BUTTON
+===================================================== */
+
+.operation {
+
+    font-size: 37px;
+
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   EQUALS BUTTON
+===================================================== */
+
+.equals {
+
+    color:
+        #292929;
+
+    background:
+
+        radial-gradient(
+
+            circle at 34% 25%,
+
+            #ffb2b7,
+
+            #fca0a7 47%,
+
+            #f38d96 100%
+        );
+
+    border-color:
+        rgba(255,180,185,.4);
+
+    text-shadow: none;
+
+    box-shadow:
+
+        0
+        5px
+        7px
+        rgba(0,0,0,.34),
+
+        0
+        0
+        10px
+        rgba(255,151,160,.22),
+
+        inset
+        2px
+        2px
+        4px
+        rgba(255,255,255,.42),
+
+        inset
+        -3px
+        -4px
+        6px
+        rgba(170,67,76,.23);
+}
+
+
+/* =====================================================
+   LIGHT MODE VARIABLES
+===================================================== */
+
+body.light-mode {
+
+    --calc-bg-1: #ffffff;
+    --calc-bg-2: #f8f9fb;
+    --calc-bg-3: #eceef2;
+
+    --key-bg-1: #ffffff;
+    --key-bg-2: #f5f6f8;
+    --key-bg-3: #e7e9ed;
+
+    --key-border: #d8dbe1;
+
+    --key-text: #397dff;
+
+    --toggle-bg: #dfe4ec;
+}
+
+
+/* =====================================================
+   WHITE CALCULATOR
+===================================================== */
+
+body.light-mode
+.calculator {
+
+    border-color:
+        rgba(255,255,255,.95);
+
+    box-shadow:
+
+        0
+        33px
+        48px
+        rgba(40,80,110,.19),
+
+        0
+        10px
+        22px
+        rgba(70,78,95,.10),
+
+        inset
+        1px
+        1px
+        2px
+        rgba(255,255,255,1),
+
+        inset
+        -2px
+        -2px
+        5px
+        rgba(160,165,175,.13);
+}
+
+
+/*
+   Display always stays black.
+*/
+
+body.light-mode
+.display {
+
+    background:
+
+        linear-gradient(
+            160deg,
+            #050505,
+            #0b0b0b
+        );
+}
+
+
+/* =====================================================
+   WHITE 3D BUTTONS
+===================================================== */
+
+body.light-mode
+.key {
+
+    text-shadow:
+
+        0 0 4px
+        rgba(57,125,255,.10);
+
+    box-shadow:
+
+        0
+        5px
+        8px
+        rgba(75,86,110,.16),
+
+        inset
+        2px
+        2px
+        4px
+        rgba(255,255,255,.95),
+
+        inset
+        -3px
+        -4px
+        7px
+        rgba(138,146,162,.15),
+
+        0
+        0
+        0
+        1px
+        rgba(255,255,255,.75);
+}
+
+
+body.light-mode
+.key:active,
+
+body.light-mode
+.key.pressed {
+
+    box-shadow:
+
+        0
+        1px
+        3px
+        rgba(70,80,100,.15),
+
+        inset
+        4px
+        5px
+        8px
+        rgba(150,157,170,.19);
+}
+
+
+/* =====================================================
+   BLUE EQUALS BUTTON
+===================================================== */
+
+body.light-mode
+.equals {
+
+    color:
+        white;
+
+    background:
+
+        radial-gradient(
+
+            circle at 35% 25%,
+
+            #69a3ff,
+
+            #4387ff 48%,
+
+            #2e6fe8 100%
+        );
+
+    border-color:
+        rgba(45,105,220,.35);
+
+    box-shadow:
+
+        0
+        5px
+        8px
+        rgba(55,100,200,.24),
+
+        0
+        0
+        10px
+        rgba(60,130,255,.14),
+
+        inset
+        2px
+        2px
+        4px
+        rgba(255,255,255,.35),
+
+        inset
+        -3px
+        -4px
+        6px
+        rgba(30,80,180,.18);
+}
+
+
+/* =====================================================
+   LIGHT TOGGLE
+===================================================== */
+
+body.light-mode
+.toggle-knob {
+
+    background:
+
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #e6e8ed
+        );
+
+    box-shadow:
+
+        2px
+        2px
+        5px
+        rgba(80,90,110,.18),
+
+        inset
+        1px
+        1px
+        2px
+        rgba(255,255,255,1);
+}
+
+
+body.light-mode
+.mode-label {
+
+    color:
+        #397dff;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding:
+            22px;
+    }
+
+
+    body::before {
+
+        width:
+            470px;
+
+        height:
+            470px;
+    }
+
+
+    body::after {
+
+        width:
+            560px;
+
+        height:
+            560px;
+    }
+
+
+    .calculator {
+
+        width:
+            100%;
+
+        max-width:
+            390px;
+
+        padding:
+            18px
+            18px
+            25px;
+
+        border-radius:
+            40px;
+    }
+
+
+    .display {
+
+        height:
+            185px;
+    }
+
+
+    .main-display {
+
+        font-size:
+            55px;
+    }
+
+
+    .main-display.expression-mode {
+
+        font-size:
+            39px;
+    }
+
+
+    .main-display.result-mode {
+
+        font-size:
+            57px;
+    }
+
+
+    .expression-history {
+
+        font-size:
+            18px;
+    }
+
+
+    .keypad {
+
+        row-gap:
+            18px;
+
+        column-gap:
+            14px;
+    }
+
+
+    .key {
+
+        width:
+            67px;
+
+        height:
+            67px;
+
+        font-size:
+            29px;
+    }
+
+
+    .operation {
+
+        font-size:
+            32px;
+    }
+}
+
+
+@media (max-width: 370px) {
+
+    .key {
+
+        width:
+            60px;
+
+        height:
+            60px;
+    }
+
+
+    .keypad {
+
+        column-gap:
+            8px;
+    }
+}
+</style>
 </head>
+
 
 <body>
 
-  <div class="calculator">
+
+<div class="calculator">
+
+
+    <!-- =========================================
+         DISPLAY
+    ========================================== -->
 
     <div class="display">
 
-      <div class="theme-icon-wrap">
-        <div id="themeIcon" class="moon-shape"></div>
-      </div>
 
-      <div class="display-content">
+        <!-- MOON / SUN -->
 
-        <div
-          id="expressionHistory"
-          class="expression-history"
-        ></div>
+        <div class="theme-icon-wrap">
 
-        <div class="display-line"></div>
+            <div
+                id="themeIcon"
+                class="moon-shape"
+            ></div>
 
-        <div
-          id="mainDisplay"
-          class="main-display"
-        >
-          0
         </div>
 
-      </div>
+
+        <!-- CALCULATION DISPLAY -->
+
+        <div class="display-content">
+
+
+            <div
+                id="expressionHistory"
+                class="expression-history"
+            ></div>
+
+
+            <div
+                class="display-line"
+            ></div>
+
+
+            <div
+                id="mainDisplay"
+                class="main-display"
+            >
+                0
+            </div>
+
+
+        </div>
 
     </div>
 
+
+    <!-- =========================================
+         LIGHT / DARK SWITCH
+    ========================================== -->
 
     <div class="mode-row">
 
-      <button
-        id="themeToggle"
-        class="toggle"
-        type="button"
-        aria-label="Switch to light mode"
-        aria-pressed="false"
-      >
-        <span class="toggle-knob"></span>
-        <span class="toggle-indicator"></span>
-      </button>
 
-      <div
-        id="modeLabel"
-        class="mode-label"
-      >
-        Light mode
-      </div>
+        <button
+            id="themeToggle"
+            class="toggle"
+            type="button"
+            aria-label="Switch to light mode"
+            aria-pressed="false"
+        >
+
+            <span
+                class="toggle-knob"
+            ></span>
+
+            <span
+                class="toggle-indicator"
+            ></span>
+
+        </button>
+
+
+        <div
+            id="modeLabel"
+            class="mode-label"
+        >
+            Light mode
+        </div>
+
 
     </div>
 
+
+    <!-- =========================================
+         KEYPAD
+    ========================================== -->
 
     <div class="keypad">
 
-      <button class="key" data-value="1">1</button>
-      <button class="key" data-value="2">2</button>
-      <button class="key" data-value="3">3</button>
-      <button class="key operation" data-value="/">÷</button>
 
-      <button class="key" data-value="4">4</button>
-      <button class="key" data-value="5">5</button>
-      <button class="key" data-value="6">6</button>
-      <button class="key operation" data-value="*">×</button>
+        <!-- ROW 1 -->
 
-      <button class="key" data-value="7">7</button>
-      <button class="key" data-value="8">8</button>
-      <button class="key" data-value="9">9</button>
-      <button class="key operation" data-value="-">−</button>
+        <button
+            class="key"
+            data-value="1"
+        >
+            1
+        </button>
 
-      <button class="key" data-value="0">0</button>
-      <button class="key" data-value=".">.</button>
-      <button class="key equals" data-value="=">=</button>
-      <button class="key operation" data-value="+">+</button>
+
+        <button
+            class="key"
+            data-value="2"
+        >
+            2
+        </button>
+
+
+        <button
+            class="key"
+            data-value="3"
+        >
+            3
+        </button>
+
+
+        <button
+            class="key operation"
+            data-value="/"
+        >
+            ÷
+        </button>
+
+
+        <!-- ROW 2 -->
+
+        <button
+            class="key"
+            data-value="4"
+        >
+            4
+        </button>
+
+
+        <button
+            class="key"
+            data-value="5"
+        >
+            5
+        </button>
+
+
+        <button
+            class="key"
+            data-value="6"
+        >
+            6
+        </button>
+
+
+        <button
+            class="key operation"
+            data-value="*"
+        >
+            ×
+        </button>
+
+
+        <!-- ROW 3 -->
+
+        <button
+            class="key"
+            data-value="7"
+        >
+            7
+        </button>
+
+
+        <button
+            class="key"
+            data-value="8"
+        >
+            8
+        </button>
+
+
+        <button
+            class="key"
+            data-value="9"
+        >
+            9
+        </button>
+
+
+        <button
+            class="key operation"
+            data-value="-"
+        >
+            −
+        </button>
+
+
+        <!-- ROW 4 -->
+
+        <button
+            class="key"
+            data-value="0"
+        >
+            0
+        </button>
+
+
+        <button
+            class="key"
+            data-value="."
+        >
+            .
+        </button>
+
+
+        <button
+            class="key equals"
+            data-value="="
+        >
+            =
+        </button>
+
+
+        <button
+            class="key operation"
+            data-value="+"
+        >
+            +
+        </button>
+
 
     </div>
 
-  </div>
+</div>
 
 
-  <script src="script.js"></script>
+<script>
+
+(() => {
+
+
+    /* ============================================
+       ELEMENTS
+    ============================================ */
+
+    const mainDisplay =
+        document.getElementById(
+            "mainDisplay"
+        );
+
+
+    const expressionHistory =
+        document.getElementById(
+            "expressionHistory"
+        );
+
+
+    const buttons =
+        document.querySelectorAll(
+            ".key"
+        );
+
+
+    const themeToggle =
+        document.getElementById(
+            "themeToggle"
+        );
+
+
+    const themeIcon =
+        document.getElementById(
+            "themeIcon"
+        );
+
+
+    const modeLabel =
+        document.getElementById(
+            "modeLabel"
+        );
+
+
+    /* ============================================
+       STATE
+    ============================================ */
+
+    let expression = "";
+
+    let resultShown = false;
+
+    let lightMode = false;
+
+
+    /* ============================================
+       PRETTY OPERATORS
+    ============================================ */
+
+    function prettyExpression(value) {
+
+        return value
+
+            .replace(
+                /\*/g,
+                " × "
+            )
+
+            .replace(
+                /\//g,
+                " ÷ "
+            )
+
+            .replace(
+                /\+/g,
+                " + "
+            )
+
+            .replace(
+                /-/g,
+                " − "
+            )
+
+            .replace(
+                /\s+/g,
+                " "
+            )
+
+            .trim();
+    }
+
+
+    /* ============================================
+       FIT LONG TEXT
+    ============================================ */
+
+    function fitDisplay() {
+
+        const length =
+            mainDisplay
+            .textContent
+            .length;
+
+
+        if (
+            mainDisplay
+            .classList
+            .contains(
+                "result-mode"
+            )
+        ) {
+
+            if (length > 12) {
+
+                mainDisplay
+                .style
+                .fontSize =
+                "42px";
+            }
+
+            else if (
+                length > 9
+            ) {
+
+                mainDisplay
+                    .style
+                    .fontSize =
+                    "52px";
+            }
+
+            else {
+
+                mainDisplay
+                    .style
+                    .fontSize =
+                    "";
+            }
+
+            return;
+        }
+
+
+        if (
+            length > 18
+        ) {
+
+            mainDisplay
+                .style
+                .fontSize =
+                "30px";
+        }
+
+        else if (
+            length > 13
+        ) {
+
+            mainDisplay
+                .style
+                .fontSize =
+                "37px";
+        }
+
+        else {
+
+            mainDisplay
+                .style
+                .fontSize =
+                "";
+        }
+    }
+
+
+    /* ============================================
+       SHOW LIVE EXPRESSION
+    ============================================ */
+
+    function showLiveExpression() {
+
+
+        expressionHistory
+            .classList
+            .remove(
+                "show"
+            );
+
+
+        expressionHistory
+            .textContent =
+            "";
+
+
+        mainDisplay
+            .classList
+            .remove(
+                "result-mode"
+            );
+
+
+        mainDisplay
+            .classList
+            .add(
+                "expression-mode"
+            );
+
+
+        mainDisplay
+            .style
+            .fontSize =
+            "";
+
+
+        if (!expression) {
+
+            mainDisplay
+                .textContent =
+                "0";
+
+
+            mainDisplay
+                .classList
+                .remove(
+                    "expression-mode"
+                );
+
+
+            fitDisplay();
+
+            return;
+        }
+
+
+        mainDisplay
+            .textContent =
+            prettyExpression(
+                expression
+            );
+
+
+        fitDisplay();
+    }
+
+
+    /* ============================================
+       FORMAT RESULT
+    ============================================ */
+
+    function formatResult(number) {
+
+
+        if (
+            Number.isInteger(
+                number
+            )
+        ) {
+
+            return String(
+                number
+            );
+        }
+
+
+        return Number(
+            number.toFixed(8)
+        ).toString();
+    }
+
+
+    /* ============================================
+       CALCULATE
+    ============================================ */
+
+    function calculate() {
+
+
+        if (!expression) {
+
+            return;
+        }
+
+
+        /*
+           Don't calculate if last
+           character is operator.
+        */
+
+        if (
+            /[+\-*/]$/
+            .test(
+                expression
+            )
+        ) {
+
+            return;
+        }
+
+
+        try {
+
+
+            const valid =
+                /^[0-9+\-*/.() ]+$/
+                .test(
+                    expression
+                );
+
+
+            if (!valid) {
+
+                throw new Error(
+                    "Invalid expression"
+                );
+            }
+
+
+            const answer =
+                Function(
+
+                    `"use strict";
+                     return (${expression})`
+
+                )();
+
+
+            if (
+                !Number.isFinite(
+                    answer
+                )
+            ) {
+
+                throw new Error(
+                    "Math error"
+                );
+            }
+
+
+            const rounded =
+                Math.round(
+
+                    (
+                        answer +
+                        Number.EPSILON
+                    )
+
+                    * 100000000
+
+                )
+
+                / 100000000;
+
+
+            const finishedExpression =
+                prettyExpression(
+                    expression
+                );
+
+
+            const resultText =
+                formatResult(
+                    rounded
+                );
+
+
+            /*
+               Animate current equation
+               away first.
+            */
+
+            mainDisplay
+                .style
+                .opacity =
+                "0";
+
+
+            mainDisplay
+                .style
+                .transform =
+                "translateY(-10px) scale(.95)";
+
+
+            setTimeout(
+                () => {
+
+
+                    /*
+                       Put equation above
+                    */
+
+                    expressionHistory
+                        .textContent =
+                        finishedExpression;
+
+
+                    expressionHistory
+                        .classList
+                        .add(
+                            "show"
+                        );
+
+
+                    /*
+                       Show result below
+                    */
+
+                    mainDisplay
+                        .classList
+                        .remove(
+                            "expression-mode"
+                        );
+
+
+                    mainDisplay
+                        .classList
+                        .add(
+                            "result-mode"
+                        );
+
+
+                    mainDisplay
+                        .textContent =
+                        resultText;
+
+
+                    mainDisplay
+                        .style
+                        .opacity =
+                        "1";
+
+
+                    mainDisplay
+                        .style
+                        .transform =
+                        "translateY(0) scale(1)";
+
+
+                    fitDisplay();
+
+
+                },
+                170
+            );
+
+
+            expression =
+                resultText;
+
+
+            resultShown =
+                true;
+
+
+        }
+
+        catch {
+
+
+            expressionHistory
+                .textContent =
+                prettyExpression(
+                    expression
+                );
+
+
+            expressionHistory
+                .classList
+                .add(
+                    "show"
+                );
+
+
+            mainDisplay
+                .classList
+                .remove(
+                    "expression-mode"
+                );
+
+
+            mainDisplay
+                .classList
+                .add(
+                    "result-mode"
+                );
+
+
+            mainDisplay
+                .textContent =
+                "Error";
+
+
+            expression =
+                "";
+
+
+            resultShown =
+                true;
+
+
+            fitDisplay();
+        }
+    }
+
+
+    /* ============================================
+       INPUT
+    ============================================ */
+
+    function inputValue(value) {
+
+
+        /* --------------------------
+           EQUAL
+        --------------------------- */
+
+        if (
+            value === "="
+        ) {
+
+            calculate();
+
+            return;
+        }
+
+
+        /* --------------------------
+           NUMBER / DECIMAL
+        --------------------------- */
+
+        if (
+            /^[0-9.]$/
+            .test(
+                value
+            )
+        ) {
+
+
+            /*
+               Number after result
+               starts fresh.
+            */
+
+            if (
+                resultShown
+            ) {
+
+
+                expression =
+                    "";
+
+
+                resultShown =
+                    false;
+
+
+                expressionHistory
+                    .classList
+                    .remove(
+                        "show"
+                    );
+
+
+                expressionHistory
+                    .textContent =
+                    "";
+            }
+
+
+            /*
+               Decimal logic
+            */
+
+            if (
+                value === "."
+            ) {
+
+
+                const currentNumber =
+                    expression
+                    .split(
+                        /[+\-*/]/
+                    )
+                    .pop();
+
+
+                if (
+                    currentNumber
+                    .includes(".")
+                ) {
+
+                    return;
+                }
+
+
+                if (
+                    !currentNumber
+                ) {
+
+                    expression +=
+                        "0";
+                }
+            }
+
+
+            expression +=
+                value;
+
+
+            showLiveExpression();
+
+            return;
+        }
+
+
+        /* --------------------------
+           OPERATORS
+        --------------------------- */
+
+        if (
+            /^[+\-*/]$/
+            .test(
+                value
+            )
+        ) {
+
+
+            /*
+               Allow negative
+               first number.
+            */
+
+            if (
+                !expression
+            ) {
+
+
+                if (
+                    value === "-"
+                ) {
+
+
+                    expression =
+                        "-";
+
+
+                    showLiveExpression();
+                }
+
+
+                return;
+            }
+
+
+            /*
+               Continue from result.
+            */
+
+            if (
+                resultShown
+            ) {
+
+
+                resultShown =
+                    false;
+
+
+                expressionHistory
+                    .classList
+                    .remove(
+                        "show"
+                    );
+
+
+                expressionHistory
+                    .textContent =
+                    "";
+            }
+
+
+            /*
+               Replace previous operator
+               if user presses another.
+            */
+
+            if (
+                /[+\-*/]$/
+                .test(
+                    expression
+                )
+            ) {
+
+
+                expression =
+                    expression
+                    .slice(
+                        0,
+                        -1
+                    );
+            }
+
+
+            expression +=
+                value;
+
+
+            /*
+               IMPORTANT:
+               operator is immediately
+               visible on display.
+            */
+
+            showLiveExpression();
+        }
+    }
+
+
+    /* ============================================
+       CLICK EVENTS
+    ============================================ */
+
+    buttons
+        .forEach(
+            button => {
+
+
+                button
+                    .addEventListener(
+                        "click",
+                        () => {
+
+
+                            inputValue(
+                                button
+                                .dataset
+                                .value
+                            );
+
+                        }
+                    );
+
+            }
+        );
+
+
+    /* ============================================
+       THEME ICON
+    ============================================ */
+
+    function changeThemeIcon() {
+
+
+        themeIcon
+            .style
+            .opacity =
+            "0";
+
+
+        themeIcon
+            .style
+            .transform =
+            "rotate(140deg) scale(.45)";
+
+
+        setTimeout(
+            () => {
+
+
+                if (
+                    lightMode
+                ) {
+
+
+                    /*
+                       SUN
+                    */
+
+                    themeIcon
+                        .className =
+                        "sun-shape";
+
+
+                    themeIcon
+                        .innerHTML =
+                        "";
+
+
+                    const rays =
+                        document
+                        .createElement(
+                            "span"
+                        );
+
+
+                    rays
+                        .className =
+                        "sun-rays";
+
+
+                    themeIcon
+                        .appendChild(
+                            rays
+                        );
+
+                }
+
+                else {
+
+
+                    /*
+                       BOLD CRESCENT MOON
+                    */
+
+                    themeIcon
+                        .className =
+                        "moon-shape";
+
+
+                    themeIcon
+                        .innerHTML =
+                        "";
+                }
+
+
+                themeIcon
+                    .style
+                    .opacity =
+                    "1";
+
+
+                themeIcon
+                    .style
+                    .transform =
+                    lightMode
+                    ? "rotate(0deg) scale(1)"
+                    : "rotate(-13deg) scale(1)";
+
+
+            },
+            220
+        );
+    }
+
+
+    /* ============================================
+       SET THEME
+    ============================================ */
+
+    function setTheme() {
+
+
+        document
+            .body
+            .classList
+            .toggle(
+                "light-mode",
+                lightMode
+            );
+
+
+        themeToggle
+            .classList
+            .toggle(
+                "active",
+                lightMode
+            );
+
+
+        themeToggle
+            .setAttribute(
+                "aria-pressed",
+                String(
+                    lightMode
+                )
+            );
+
+
+        if (
+            lightMode
+        ) {
+
+
+            modeLabel
+                .textContent =
+                "Dark mode";
+
+
+            themeToggle
+                .setAttribute(
+                    "aria-label",
+                    "Switch to dark mode"
+                );
+
+        }
+
+        else {
+
+
+            modeLabel
+                .textContent =
+                "Light mode";
+
+
+            themeToggle
+                .setAttribute(
+                    "aria-label",
+                    "Switch to light mode"
+                );
+        }
+
+
+        changeThemeIcon();
+    }
+
+
+    /* ============================================
+       THEME CLICK
+    ============================================ */
+
+    themeToggle
+        .addEventListener(
+            "click",
+            () => {
+
+
+                lightMode =
+                    !lightMode;
+
+
+                setTheme();
+
+            }
+        );
+
+
+    /* ============================================
+       KEYBOARD SUPPORT
+    ============================================ */
+
+    document
+        .addEventListener(
+            "keydown",
+            event => {
+
+
+                const key =
+                    event.key;
+
+
+                /*
+                   Numbers / decimal
+                */
+
+                if (
+                    /^[0-9.]$/
+                    .test(
+                        key
+                    )
+                ) {
+
+                    inputValue(
+                        key
+                    );
+                }
+
+
+                /*
+                   Operators
+                */
+
+                if (
+                    [
+                        "+",
+                        "-",
+                        "*",
+                        "/"
+                    ]
+                    .includes(
+                        key
+                    )
+                ) {
+
+                    inputValue(
+                        key
+                    );
+                }
+
+
+                /*
+                   Enter
+                */
+
+                if (
+                    key ===
+                    "Enter"
+
+                    ||
+
+                    key ===
+                    "="
+                ) {
+
+
+                    event
+                        .preventDefault();
+
+
+                    inputValue(
+                        "="
+                    );
+                }
+
+
+                /*
+                   Backspace
+                */
+
+                if (
+                    key ===
+                    "Backspace"
+                ) {
+
+
+                    if (
+                        resultShown
+                    ) {
+
+
+                        expression =
+                            "";
+
+
+                        resultShown =
+                            false;
+
+
+                        expressionHistory
+                            .textContent =
+                            "";
+
+
+                        expressionHistory
+                            .classList
+                            .remove(
+                                "show"
+                            );
+
+                    }
+
+                    else {
+
+
+                        expression =
+                            expression
+                            .slice(
+                                0,
+                                -1
+                            );
+                    }
+
+
+                    showLiveExpression();
+                }
+
+
+                /*
+                   ESC clears everything
+                */
+
+                if (
+                    key ===
+                    "Escape"
+                ) {
+
+
+                    expression =
+                        "";
+
+
+                    resultShown =
+                        false;
+
+
+                    expressionHistory
+                        .textContent =
+                        "";
+
+
+                    expressionHistory
+                        .classList
+                        .remove(
+                            "show"
+                        );
+
+
+                    showLiveExpression();
+                }
+
+
+                /*
+                   Physical keyboard
+                   button animation
+                */
+
+                buttons
+                    .forEach(
+                        button => {
+
+
+                            const value =
+                                button
+                                .dataset
+                                .value;
+
+
+                            const matches =
+                                value === key
+
+                                ||
+
+                                (
+                                    value === "="
+                                    &&
+                                    key === "Enter"
+                                );
+
+
+                            if (
+                                matches
+                            ) {
+
+
+                                button
+                                    .classList
+                                    .add(
+                                        "pressed"
+                                    );
+
+
+                                setTimeout(
+                                    () => {
+
+
+                                        button
+                                            .classList
+                                            .remove(
+                                                "pressed"
+                                            );
+
+
+                                    },
+                                    110
+                                );
+                            }
+
+                        }
+                    );
+
+            }
+        );
+
+
+    /* ============================================
+       INITIAL SCREEN
+    ============================================ */
+
+    showLiveExpression();
+
+
+})();
+
+</script>
+
 
 </body>
 </html>
