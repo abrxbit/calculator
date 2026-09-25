@@ -7,6 +7,7 @@
 <title>Aesthetic 3D Calculator</title>
 
 <style>
+
 /* =====================================================
    RESET
 ===================================================== */
@@ -18,8 +19,6 @@
 }
 
 :root {
-
-    /* DARK CALCULATOR */
 
     --calc-bg-1: #303030;
     --calc-bg-2: #292929;
@@ -42,7 +41,7 @@
 
 
 /* =====================================================
-   PAGE BACKGROUND
+   PAGE
 ===================================================== */
 
 html,
@@ -53,6 +52,7 @@ body {
 body {
 
     min-height: 100vh;
+    min-height: 100dvh;
 
     display: flex;
     align-items: center;
@@ -60,9 +60,9 @@ body {
 
     position: relative;
 
-    padding: 40px;
+    padding: 18px;
 
-    overflow: hidden;
+    overflow: auto;
 
     font-family:
         -apple-system,
@@ -75,10 +75,6 @@ body {
         Arial,
         sans-serif;
 
-    /*
-       Light icy-blue background
-    */
-
     background:
         radial-gradient(
             circle at 50% 42%,
@@ -90,17 +86,17 @@ body {
 
 
 /* =====================================================
-   BIG BLUE CIRCLE
+   BLUE CIRCLE
 ===================================================== */
 
 body::before {
 
     content: "";
 
-    position: absolute;
+    position: fixed;
 
-    width: 620px;
-    height: 620px;
+    width: 470px;
+    height: 470px;
 
     left: 50%;
     top: 50%;
@@ -120,28 +116,30 @@ body::before {
         );
 
     box-shadow:
-        0 35px 75px
-        rgba(0, 105, 170, .20),
+        0 30px 65px
+        rgba(0,105,170,.18),
 
-        0 0 90px
-        rgba(0, 145, 220, .15);
+        0 0 80px
+        rgba(0,145,220,.14);
+
+    pointer-events: none;
 
     z-index: 0;
 }
 
 
 /* =====================================================
-   AMBIENT BLUE GLOW
+   AMBIENT GLOW
 ===================================================== */
 
 body::after {
 
     content: "";
 
-    position: absolute;
+    position: fixed;
 
-    width: 760px;
-    height: 760px;
+    width: 570px;
+    height: 570px;
 
     left: 50%;
     top: 50%;
@@ -154,8 +152,8 @@ body::after {
     background:
         radial-gradient(
             circle,
-            rgba(20, 150, 220, .14),
-            rgba(20, 150, 220, .05) 45%,
+            rgba(20,150,220,.14),
+            rgba(20,150,220,.05) 45%,
             transparent 72%
         );
 
@@ -168,23 +166,26 @@ body::after {
 
 
 /* =====================================================
-   CALCULATOR BODY
+   CALCULATOR
 ===================================================== */
 
 .calculator {
 
-    width: 445px;
+    width: min(
+        340px,
+        calc(100vw - 36px)
+    );
 
     position: relative;
 
     z-index: 2;
 
     padding:
-        22px
-        22px
-        29px;
+        16px
+        16px
+        20px;
 
-    border-radius: 48px;
+    border-radius: 37px;
 
     background:
         linear-gradient(
@@ -200,22 +201,18 @@ body::after {
 
     box-shadow:
 
-        0 34px 50px
-        rgba(0,0,0,.23),
+        0 27px 40px
+        rgba(0,0,0,.22),
 
-        0 13px 25px
+        0 10px 18px
         rgba(0,0,0,.15),
 
         inset
-        1px
-        1px
-        1px
+        1px 1px 1px
         rgba(255,255,255,.08),
 
         inset
-        -2px
-        -2px
-        5px
+        -2px -2px 4px
         rgba(0,0,0,.34);
 
     transition:
@@ -235,14 +232,14 @@ body::after {
 
 .display {
 
-    height: 210px;
+    height: 155px;
 
     position: relative;
 
     padding:
-        22px
-        36px
-        24px;
+        16px
+        25px
+        18px;
 
     overflow: hidden;
 
@@ -250,10 +247,10 @@ body::after {
     flex-direction: column;
 
     border-radius:
-        30px
-        30px
-        11px
-        11px;
+        23px
+        23px
+        9px
+        9px;
 
     background:
         linear-gradient(
@@ -265,32 +262,26 @@ body::after {
     box-shadow:
 
         inset
-        0
-        3px
-        10px
+        0 3px 8px
         rgba(0,0,0,.95),
 
         inset
-        0
-        -1px
-        0
+        0 -1px 0
         rgba(255,255,255,.04),
 
-        0
-        2px
-        5px
+        0 2px 4px
         rgba(0,0,0,.4);
 }
 
 
 /* =====================================================
-   MOON / SUN WRAPPER
+   THEME ICON WRAPPER
 ===================================================== */
 
 .theme-icon-wrap {
 
-    width: 38px;
-    height: 38px;
+    width: 28px;
+    height: 28px;
 
     position: relative;
 
@@ -301,13 +292,13 @@ body::after {
 
 
 /* =====================================================
-   THICK YELLOW MOON
+   MOON
 ===================================================== */
 
 .moon-shape {
 
-    width: 25px;
-    height: 25px;
+    width: 19px;
+    height: 19px;
 
     position: relative;
 
@@ -318,10 +309,10 @@ body::after {
 
     box-shadow:
 
-        0 0 7px
+        0 0 6px
         rgba(255,216,77,.28),
 
-        0 0 13px
+        0 0 10px
         rgba(255,216,77,.12);
 
     transform:
@@ -334,27 +325,22 @@ body::after {
 }
 
 
-/*
-   Dark cut-out makes
-   the moon crescent.
-*/
-
 .moon-shape::after {
 
     content: "";
 
     position: absolute;
 
-    width: 18px;
-    height: 18px;
+    width: 13px;
+    height: 13px;
 
     border-radius: 50%;
 
     background:
         #080808;
 
-    top: -2px;
-    left: 9px;
+    top: -1px;
+    left: 8px;
 }
 
 
@@ -364,8 +350,8 @@ body::after {
 
 .sun-shape {
 
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
 
     position: relative;
 
@@ -375,7 +361,7 @@ body::after {
         var(--yellow);
 
     box-shadow:
-        0 0 10px
+        0 0 8px
         rgba(255,216,77,.32);
 
     transition:
@@ -390,8 +376,8 @@ body::after {
 
     content: "";
 
-    width: 32px;
-    height: 3px;
+    width: 25px;
+    height: 2px;
 
     position: absolute;
 
@@ -408,22 +394,22 @@ body::after {
 .sun-shape::before {
 
     transform:
-        translate(-50%, -50%);
+        translate(-50%,-50%);
 }
 
 
 .sun-shape::after {
 
     transform:
-        translate(-50%, -50%)
+        translate(-50%,-50%)
         rotate(90deg);
 }
 
 
 .sun-rays {
 
-    width: 32px;
-    height: 3px;
+    width: 25px;
+    height: 2px;
 
     position: absolute;
 
@@ -436,7 +422,7 @@ body::after {
         var(--yellow);
 
     transform:
-        translate(-50%, -50%)
+        translate(-50%,-50%)
         rotate(45deg);
 }
 
@@ -445,8 +431,8 @@ body::after {
 
     content: "";
 
-    width: 32px;
-    height: 3px;
+    width: 25px;
+    height: 2px;
 
     position: absolute;
 
@@ -477,13 +463,14 @@ body::after {
 
 
 /* =====================================================
-   HISTORY EQUATION
+   PREVIOUS EQUATION
 ===================================================== */
 
 .expression-history {
 
     width: 100%;
-    min-height: 28px;
+
+    min-height: 21px;
 
     overflow: hidden;
 
@@ -491,24 +478,28 @@ body::after {
 
     text-align: right;
 
-    color: #969696;
+    color:
+        #969696;
 
-    font-size: 21px;
-    font-weight: 650;
+    font-size:
+        15px;
 
-    letter-spacing: -.4px;
+    font-weight:
+        650;
+
+    letter-spacing:
+        -.2px;
 
     opacity: 0;
 
     transform:
-        translateY(22px)
+        translateY(16px)
         scale(.96);
 
     transform-origin:
         right center;
 
     transition:
-
         transform .45s
         cubic-bezier(.22,.61,.36,1),
 
@@ -527,21 +518,23 @@ body::after {
 
 
 /* =====================================================
-   DISPLAY SEPARATOR
+   DISPLAY LINE
 ===================================================== */
 
 .display-line {
 
     width: 46%;
+
     height: 2px;
 
     margin:
-        5px
+        3px
         0
-        9px
+        7px
         auto;
 
-    border-radius: 50px;
+    border-radius:
+        50px;
 
     background:
         #505050;
@@ -565,13 +558,17 @@ body::after {
     color:
         var(--display-text);
 
-    font-size: 65px;
+    font-size:
+        48px;
 
-    font-weight: 800;
+    font-weight:
+        800;
 
-    line-height: 1;
+    line-height:
+        1;
 
-    letter-spacing: -2.5px;
+    letter-spacing:
+        -1.8px;
 
     transform-origin:
         right bottom;
@@ -587,30 +584,26 @@ body::after {
 }
 
 
-/*
-   While entering an equation,
-   slightly smaller.
-*/
-
 .main-display.expression-mode {
 
-    font-size: 46px;
+    font-size:
+        33px;
 
-    font-weight: 720;
+    font-weight:
+        720;
 
-    letter-spacing: -1.5px;
+    letter-spacing:
+        -1px;
 }
 
 
-/*
-   Large result
-*/
-
 .main-display.result-mode {
 
-    font-size: 66px;
+    font-size:
+        49px;
 
-    font-weight: 850;
+    font-weight:
+        850;
 
     animation:
         resultAppear
@@ -626,7 +619,7 @@ body::after {
         opacity: 0;
 
         transform:
-            translateY(13px)
+            translateY(10px)
             scale(.93);
     }
 
@@ -647,38 +640,52 @@ body::after {
 
 .mode-row {
 
-    height: 65px;
+    height:
+        50px;
 
-    padding-left: 9px;
+    padding-left:
+        6px;
 
-    display: flex;
-    align-items: center;
+    display:
+        flex;
 
-    gap: 12px;
+    align-items:
+        center;
+
+    gap:
+        9px;
 }
 
 
 /* =====================================================
-   THEME SWITCH
+   TOGGLE
 ===================================================== */
 
 .toggle {
 
-    width: 75px;
-    height: 31px;
+    width:
+        58px;
 
-    position: relative;
+    height:
+        25px;
 
-    padding: 0;
+    position:
+        relative;
 
-    border: 0;
+    padding:
+        0;
+
+    border:
+        0;
 
     border-radius:
         999px;
 
-    outline: none;
+    outline:
+        none;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
     background:
         var(--toggle-bg);
@@ -686,21 +693,15 @@ body::after {
     box-shadow:
 
         inset
-        3px
-        3px
-        7px
+        3px 3px 6px
         rgba(0,0,0,.70),
 
         inset
-        -2px
-        -2px
-        4px
+        -2px -2px 3px
         rgba(255,255,255,.04),
 
-        0
-        2px
-        4px
-        rgba(0,0,0,.45);
+        0 2px 4px
+        rgba(0,0,0,.40);
 
     transition:
         background .5s ease,
@@ -710,15 +711,23 @@ body::after {
 
 .toggle-knob {
 
-    width: 23px;
-    height: 23px;
+    width:
+        19px;
 
-    position: absolute;
+    height:
+        19px;
 
-    left: 5px;
-    top: 4px;
+    position:
+        absolute;
 
-    border-radius: 50%;
+    left:
+        4px;
+
+    top:
+        3px;
+
+    border-radius:
+        50%;
 
     background:
         linear-gradient(
@@ -729,15 +738,11 @@ body::after {
 
     box-shadow:
 
-        2px
-        2px
-        5px
+        2px 2px 4px
         rgba(0,0,0,.75),
 
         inset
-        1px
-        1px
-        1px
+        1px 1px 1px
         rgba(255,255,255,.10);
 
     transition:
@@ -756,13 +761,20 @@ body::after {
 
 .toggle-indicator {
 
-    width: 9px;
-    height: 6px;
+    width:
+        7px;
 
-    position: absolute;
+    height:
+        5px;
 
-    right: 11px;
-    top: 12px;
+    position:
+        absolute;
+
+    right:
+        8px;
+
+    top:
+        10px;
 
     border-radius:
         20px;
@@ -771,7 +783,7 @@ body::after {
         #ef9299;
 
     box-shadow:
-        0 0 7px
+        0 0 6px
         rgba(255,140,150,.7);
 
     transition:
@@ -783,7 +795,8 @@ body::after {
 .toggle.active
 .toggle-knob {
 
-    left: 47px;
+    left:
+        35px;
 
     transform:
         rotate(360deg);
@@ -797,13 +810,13 @@ body::after {
         #5294ff;
 
     box-shadow:
-        0 0 8px
+        0 0 7px
         rgba(82,148,255,.65);
 }
 
 
 /* =====================================================
-   MODE TEXT
+   MODE LABEL
 ===================================================== */
 
 .mode-label {
@@ -812,13 +825,13 @@ body::after {
         #a87479;
 
     font-size:
-        11px;
+        9px;
 
     font-weight:
         700;
 
     letter-spacing:
-        .15px;
+        .1px;
 
     transition:
         color .5s ease;
@@ -831,43 +844,59 @@ body::after {
 
 .keypad {
 
-    display: grid;
+    display:
+        grid;
 
     grid-template-columns:
         repeat(4,1fr);
 
-    row-gap: 22px;
+    row-gap:
+        14px;
 
-    column-gap: 25px;
+    column-gap:
+        14px;
 }
 
 
 /* =====================================================
-   3D BUTTON
+   KEYS
 ===================================================== */
 
 .key {
 
-    width: 79px;
-    height: 79px;
+    width:
+        60px;
 
-    justify-self: center;
+    height:
+        60px;
 
-    border-radius: 50%;
+    justify-self:
+        center;
+
+    border-radius:
+        50%;
 
     border:
-        2px solid
+        1.5px solid
         var(--key-border);
 
-    outline: none;
+    outline:
+        none;
 
-    cursor: pointer;
+    cursor:
+        pointer;
 
-    user-select: none;
+    user-select:
+        none;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
 
     background:
 
@@ -886,7 +915,7 @@ body::after {
         var(--key-text);
 
     font-size:
-        34px;
+        25px;
 
     font-weight:
         750;
@@ -899,32 +928,25 @@ body::after {
         sans-serif;
 
     text-shadow:
-        0 0 4px
+        0 0 3px
         rgba(255,157,165,.23);
 
     box-shadow:
 
         0
-        5px
-        5px
+        4px
+        4px
         rgba(0,0,0,.32),
 
         inset
-        2px
-        2px
-        4px
+        2px 2px 3px
         rgba(255,255,255,.045),
 
         inset
-        -3px
-        -4px
-        6px
+        -3px -3px 5px
         rgba(0,0,0,.35),
 
-        0
-        0
-        0
-        1px
+        0 0 0 1px
         rgba(255,255,255,.025);
 
     transition:
@@ -952,7 +974,7 @@ body::after {
     .key:hover {
 
         transform:
-            translateY(-2px);
+            translateY(-1px);
     }
 }
 
@@ -987,19 +1009,21 @@ body::after {
 
 
 /* =====================================================
-   OPERATION BUTTON
+   OPERATION
 ===================================================== */
 
 .operation {
 
-    font-size: 37px;
+    font-size:
+        28px;
 
-    font-weight: 700;
+    font-weight:
+        700;
 }
 
 
 /* =====================================================
-   EQUALS BUTTON
+   EQUALS
 ===================================================== */
 
 .equals {
@@ -1023,58 +1047,64 @@ body::after {
     border-color:
         rgba(255,180,185,.4);
 
-    text-shadow: none;
+    text-shadow:
+        none;
 
     box-shadow:
 
-        0
-        5px
-        7px
+        0 4px 6px
         rgba(0,0,0,.34),
 
-        0
-        0
-        10px
+        0 0 8px
         rgba(255,151,160,.22),
 
         inset
-        2px
-        2px
-        4px
+        2px 2px 4px
         rgba(255,255,255,.42),
 
         inset
-        -3px
-        -4px
-        6px
+        -3px -3px 5px
         rgba(170,67,76,.23);
 }
 
 
 /* =====================================================
-   LIGHT MODE VARIABLES
+   LIGHT MODE
 ===================================================== */
 
 body.light-mode {
 
-    --calc-bg-1: #ffffff;
-    --calc-bg-2: #f8f9fb;
-    --calc-bg-3: #eceef2;
+    --calc-bg-1:
+        #ffffff;
 
-    --key-bg-1: #ffffff;
-    --key-bg-2: #f5f6f8;
-    --key-bg-3: #e7e9ed;
+    --calc-bg-2:
+        #f8f9fb;
 
-    --key-border: #d8dbe1;
+    --calc-bg-3:
+        #eceef2;
 
-    --key-text: #397dff;
+    --key-bg-1:
+        #ffffff;
 
-    --toggle-bg: #dfe4ec;
+    --key-bg-2:
+        #f5f6f8;
+
+    --key-bg-3:
+        #e7e9ed;
+
+    --key-border:
+        #d8dbe1;
+
+    --key-text:
+        #397dff;
+
+    --toggle-bg:
+        #dfe4ec;
 }
 
 
 /* =====================================================
-   WHITE CALCULATOR
+   LIGHT CALCULATOR
 ===================================================== */
 
 body.light-mode
@@ -1085,39 +1115,28 @@ body.light-mode
 
     box-shadow:
 
-        0
-        33px
-        48px
+        0 26px 40px
         rgba(40,80,110,.19),
 
-        0
-        10px
-        22px
+        0 8px 18px
         rgba(70,78,95,.10),
 
         inset
-        1px
-        1px
-        2px
+        1px 1px 2px
         rgba(255,255,255,1),
 
         inset
-        -2px
-        -2px
-        5px
+        -2px -2px 4px
         rgba(160,165,175,.13);
 }
 
 
-/*
-   Display always stays black.
-*/
+/* DISPLAY ALWAYS BLACK */
 
 body.light-mode
 .display {
 
     background:
-
         linear-gradient(
             160deg,
             #050505,
@@ -1127,40 +1146,30 @@ body.light-mode
 
 
 /* =====================================================
-   WHITE 3D BUTTONS
+   LIGHT KEYS
 ===================================================== */
 
 body.light-mode
 .key {
 
     text-shadow:
-
-        0 0 4px
+        0 0 3px
         rgba(57,125,255,.10);
 
     box-shadow:
 
-        0
-        5px
-        8px
+        0 4px 7px
         rgba(75,86,110,.16),
 
         inset
-        2px
-        2px
-        4px
+        2px 2px 4px
         rgba(255,255,255,.95),
 
         inset
-        -3px
-        -4px
-        7px
+        -3px -3px 6px
         rgba(138,146,162,.15),
 
-        0
-        0
-        0
-        1px
+        0 0 0 1px
         rgba(255,255,255,.75);
 }
 
@@ -1173,21 +1182,17 @@ body.light-mode
 
     box-shadow:
 
-        0
-        1px
-        3px
+        0 1px 3px
         rgba(70,80,100,.15),
 
         inset
-        4px
-        5px
-        8px
+        4px 5px 8px
         rgba(150,157,170,.19);
 }
 
 
 /* =====================================================
-   BLUE EQUALS BUTTON
+   BLUE EQUALS
 ===================================================== */
 
 body.light-mode
@@ -1214,26 +1219,18 @@ body.light-mode
 
     box-shadow:
 
-        0
-        5px
-        8px
+        0 4px 7px
         rgba(55,100,200,.24),
 
-        0
-        0
-        10px
+        0 0 8px
         rgba(60,130,255,.14),
 
         inset
-        2px
-        2px
-        4px
+        2px 2px 4px
         rgba(255,255,255,.35),
 
         inset
-        -3px
-        -4px
-        6px
+        -3px -3px 5px
         rgba(30,80,180,.18);
 }
 
@@ -1255,15 +1252,11 @@ body.light-mode
 
     box-shadow:
 
-        2px
-        2px
-        5px
+        2px 2px 4px
         rgba(80,90,110,.18),
 
         inset
-        1px
-        1px
-        2px
+        1px 1px 2px
         rgba(255,255,255,1);
 }
 
@@ -1280,137 +1273,227 @@ body.light-mode
    MOBILE
 ===================================================== */
 
-@media (max-width: 600px) {
+@media (max-width: 380px) {
 
     body {
 
         padding:
-            22px;
+            12px;
     }
 
 
     body::before {
 
         width:
-            470px;
+            390px;
 
         height:
-            470px;
+            390px;
     }
 
 
     body::after {
 
         width:
-            560px;
+            450px;
 
         height:
-            560px;
+            450px;
     }
 
 
     .calculator {
 
         width:
-            100%;
-
-        max-width:
-            390px;
+            min(
+                310px,
+                calc(100vw - 24px)
+            );
 
         padding:
-            18px
-            18px
-            25px;
-
-        border-radius:
-            40px;
+            14px
+            14px
+            18px;
     }
 
 
     .display {
 
         height:
-            185px;
-    }
-
-
-    .main-display {
-
-        font-size:
-            55px;
-    }
-
-
-    .main-display.expression-mode {
-
-        font-size:
-            39px;
-    }
-
-
-    .main-display.result-mode {
-
-        font-size:
-            57px;
-    }
-
-
-    .expression-history {
-
-        font-size:
-            18px;
-    }
-
-
-    .keypad {
-
-        row-gap:
-            18px;
-
-        column-gap:
-            14px;
+            145px;
     }
 
 
     .key {
 
         width:
-            67px;
+            54px;
 
         height:
-            67px;
+            54px;
 
         font-size:
-            29px;
+            23px;
     }
 
 
     .operation {
 
         font-size:
-            32px;
-    }
-}
-
-
-@media (max-width: 370px) {
-
-    .key {
-
-        width:
-            60px;
-
-        height:
-            60px;
+            26px;
     }
 
 
     .keypad {
 
+        row-gap:
+            12px;
+
         column-gap:
-            8px;
+            10px;
+    }
+
+
+    .main-display {
+
+        font-size:
+            44px;
+    }
+
+
+    .main-display.expression-mode {
+
+        font-size:
+            30px;
+    }
+
+
+    .main-display.result-mode {
+
+        font-size:
+            46px;
     }
 }
+
+
+/* =====================================================
+   SHORT SCREEN / LAPTOP
+===================================================== */
+
+@media (max-height: 650px) {
+
+    .calculator {
+
+        width:
+            min(
+                310px,
+                calc(100vw - 30px)
+            );
+
+        padding:
+            13px
+            14px
+            17px;
+    }
+
+
+    .display {
+
+        height:
+            135px;
+
+        padding:
+            13px
+            22px
+            15px;
+    }
+
+
+    .mode-row {
+
+        height:
+            43px;
+    }
+
+
+    .keypad {
+
+        row-gap:
+            11px;
+
+        column-gap:
+            11px;
+    }
+
+
+    .key {
+
+        width:
+            53px;
+
+        height:
+            53px;
+
+        font-size:
+            22px;
+    }
+
+
+    .operation {
+
+        font-size:
+            25px;
+    }
+
+
+    .main-display {
+
+        font-size:
+            42px;
+    }
+
+
+    .main-display.expression-mode {
+
+        font-size:
+            29px;
+    }
+
+
+    .main-display.result-mode {
+
+        font-size:
+            44px;
+    }
+
+
+    .expression-history {
+
+        font-size:
+            13px;
+    }
+
+
+    body::before {
+
+        width:
+            410px;
+
+        height:
+            410px;
+    }
+
+
+    body::after {
+
+        width:
+            490px;
+
+        height:
+            490px;
+    }
+}
+
 </style>
 </head>
 
@@ -1421,9 +1504,7 @@ body.light-mode
 <div class="calculator">
 
 
-    <!-- =========================================
-         DISPLAY
-    ========================================== -->
+    <!-- DISPLAY -->
 
     <div class="display">
 
@@ -1440,7 +1521,7 @@ body.light-mode
         </div>
 
 
-        <!-- CALCULATION DISPLAY -->
+        <!-- DISPLAY CONTENT -->
 
         <div class="display-content">
 
@@ -1469,9 +1550,7 @@ body.light-mode
     </div>
 
 
-    <!-- =========================================
-         LIGHT / DARK SWITCH
-    ========================================== -->
+    <!-- THEME SWITCH -->
 
     <div class="mode-row">
 
@@ -1506,14 +1585,10 @@ body.light-mode
     </div>
 
 
-    <!-- =========================================
-         KEYPAD
-    ========================================== -->
+    <!-- KEYPAD -->
 
     <div class="keypad">
 
-
-        <!-- ROW 1 -->
 
         <button
             class="key"
@@ -1547,8 +1622,6 @@ body.light-mode
         </button>
 
 
-        <!-- ROW 2 -->
-
         <button
             class="key"
             data-value="4"
@@ -1581,8 +1654,6 @@ body.light-mode
         </button>
 
 
-        <!-- ROW 3 -->
-
         <button
             class="key"
             data-value="7"
@@ -1614,8 +1685,6 @@ body.light-mode
             −
         </button>
 
-
-        <!-- ROW 4 -->
 
         <button
             class="key"
@@ -1659,9 +1728,9 @@ body.light-mode
 (() => {
 
 
-    /* ============================================
+    /* =================================================
        ELEMENTS
-    ============================================ */
+    ================================================= */
 
     const mainDisplay =
         document.getElementById(
@@ -1699,9 +1768,9 @@ body.light-mode
         );
 
 
-    /* ============================================
+    /* =================================================
        STATE
-    ============================================ */
+    ================================================= */
 
     let expression = "";
 
@@ -1710,9 +1779,9 @@ body.light-mode
     let lightMode = false;
 
 
-    /* ============================================
-       PRETTY OPERATORS
-    ============================================ */
+    /* =================================================
+       PRETTY EQUATION
+    ================================================= */
 
     function prettyExpression(value) {
 
@@ -1747,11 +1816,12 @@ body.light-mode
     }
 
 
-    /* ============================================
-       FIT LONG TEXT
-    ============================================ */
+    /* =================================================
+       RESPONSIVE DISPLAY TEXT
+    ================================================= */
 
     function fitDisplay() {
+
 
         const length =
             mainDisplay
@@ -1767,12 +1837,16 @@ body.light-mode
             )
         ) {
 
-            if (length > 12) {
+
+            if (
+                length > 12
+            ) {
 
                 mainDisplay
-                .style
-                .fontSize =
-                "42px";
+                    .style
+                    .fontSize =
+                    "31px";
+
             }
 
             else if (
@@ -1782,7 +1856,8 @@ body.light-mode
                 mainDisplay
                     .style
                     .fontSize =
-                    "52px";
+                    "38px";
+
             }
 
             else {
@@ -1792,6 +1867,7 @@ body.light-mode
                     .fontSize =
                     "";
             }
+
 
             return;
         }
@@ -1804,7 +1880,7 @@ body.light-mode
             mainDisplay
                 .style
                 .fontSize =
-                "30px";
+                "22px";
         }
 
         else if (
@@ -1814,7 +1890,7 @@ body.light-mode
             mainDisplay
                 .style
                 .fontSize =
-                "37px";
+                "27px";
         }
 
         else {
@@ -1827,9 +1903,9 @@ body.light-mode
     }
 
 
-    /* ============================================
-       SHOW LIVE EXPRESSION
-    ============================================ */
+    /* =================================================
+       LIVE EXPRESSION
+    ================================================= */
 
     function showLiveExpression() {
 
@@ -1866,7 +1942,22 @@ body.light-mode
             "";
 
 
-        if (!expression) {
+        mainDisplay
+            .style
+            .opacity =
+            "1";
+
+
+        mainDisplay
+            .style
+            .transform =
+            "translateY(0) scale(1)";
+
+
+        if (
+            !expression
+        ) {
+
 
             mainDisplay
                 .textContent =
@@ -1897,9 +1988,9 @@ body.light-mode
     }
 
 
-    /* ============================================
+    /* =================================================
        FORMAT RESULT
-    ============================================ */
+    ================================================= */
 
     function formatResult(number) {
 
@@ -1918,27 +2009,25 @@ body.light-mode
 
         return Number(
             number.toFixed(8)
-        ).toString();
+        )
+        .toString();
     }
 
 
-    /* ============================================
+    /* =================================================
        CALCULATE
-    ============================================ */
+    ================================================= */
 
     function calculate() {
 
 
-        if (!expression) {
+        if (
+            !expression
+        ) {
 
             return;
         }
 
-
-        /*
-           Don't calculate if last
-           character is operator.
-        */
 
         if (
             /[+\-*/]$/
@@ -1961,7 +2050,9 @@ body.light-mode
                 );
 
 
-            if (!valid) {
+            if (
+                !valid
+            ) {
 
                 throw new Error(
                     "Invalid expression"
@@ -1973,7 +2064,7 @@ body.light-mode
                 Function(
 
                     `"use strict";
-                     return (${expression})`
+                    return (${expression})`
 
                 )();
 
@@ -1998,11 +2089,13 @@ body.light-mode
                         Number.EPSILON
                     )
 
-                    * 100000000
+                    *
+                    100000000
 
                 )
 
-                / 100000000;
+                /
+                100000000;
 
 
             const finishedExpression =
@@ -2017,10 +2110,7 @@ body.light-mode
                 );
 
 
-            /*
-               Animate current equation
-               away first.
-            */
+            /* animate upward */
 
             mainDisplay
                 .style
@@ -2031,16 +2121,12 @@ body.light-mode
             mainDisplay
                 .style
                 .transform =
-                "translateY(-10px) scale(.95)";
+                "translateY(-8px) scale(.95)";
 
 
             setTimeout(
                 () => {
 
-
-                    /*
-                       Put equation above
-                    */
 
                     expressionHistory
                         .textContent =
@@ -2053,10 +2139,6 @@ body.light-mode
                             "show"
                         );
 
-
-                    /*
-                       Show result below
-                    */
 
                     mainDisplay
                         .classList
@@ -2156,16 +2238,14 @@ body.light-mode
     }
 
 
-    /* ============================================
+    /* =================================================
        INPUT
-    ============================================ */
+    ================================================= */
 
     function inputValue(value) {
 
 
-        /* --------------------------
-           EQUAL
-        --------------------------- */
+        /* EQUAL */
 
         if (
             value === "="
@@ -2177,9 +2257,7 @@ body.light-mode
         }
 
 
-        /* --------------------------
-           NUMBER / DECIMAL
-        --------------------------- */
+        /* NUMBER / DECIMAL */
 
         if (
             /^[0-9.]$/
@@ -2188,11 +2266,6 @@ body.light-mode
             )
         ) {
 
-
-            /*
-               Number after result
-               starts fresh.
-            */
 
             if (
                 resultShown
@@ -2219,10 +2292,6 @@ body.light-mode
                     "";
             }
 
-
-            /*
-               Decimal logic
-            */
 
             if (
                 value === "."
@@ -2266,9 +2335,7 @@ body.light-mode
         }
 
 
-        /* --------------------------
-           OPERATORS
-        --------------------------- */
+        /* OPERATORS */
 
         if (
             /^[+\-*/]$/
@@ -2277,11 +2344,6 @@ body.light-mode
             )
         ) {
 
-
-            /*
-               Allow negative
-               first number.
-            */
 
             if (
                 !expression
@@ -2305,10 +2367,6 @@ body.light-mode
             }
 
 
-            /*
-               Continue from result.
-            */
-
             if (
                 resultShown
             ) {
@@ -2331,11 +2389,6 @@ body.light-mode
             }
 
 
-            /*
-               Replace previous operator
-               if user presses another.
-            */
-
             if (
                 /[+\-*/]$/
                 .test(
@@ -2357,20 +2410,14 @@ body.light-mode
                 value;
 
 
-            /*
-               IMPORTANT:
-               operator is immediately
-               visible on display.
-            */
-
             showLiveExpression();
         }
     }
 
 
-    /* ============================================
-       CLICK EVENTS
-    ============================================ */
+    /* =================================================
+       BUTTON EVENTS
+    ================================================= */
 
     buttons
         .forEach(
@@ -2396,9 +2443,9 @@ body.light-mode
         );
 
 
-    /* ============================================
+    /* =================================================
        THEME ICON
-    ============================================ */
+    ================================================= */
 
     function changeThemeIcon() {
 
@@ -2423,10 +2470,6 @@ body.light-mode
                     lightMode
                 ) {
 
-
-                    /*
-                       SUN
-                    */
 
                     themeIcon
                         .className =
@@ -2460,10 +2503,6 @@ body.light-mode
                 else {
 
 
-                    /*
-                       BOLD CRESCENT MOON
-                    */
-
                     themeIcon
                         .className =
                         "moon-shape";
@@ -2485,8 +2524,12 @@ body.light-mode
                     .style
                     .transform =
                     lightMode
-                    ? "rotate(0deg) scale(1)"
-                    : "rotate(-13deg) scale(1)";
+
+                    ?
+                    "rotate(0deg) scale(1)"
+
+                    :
+                    "rotate(-13deg) scale(1)";
 
 
             },
@@ -2495,9 +2538,9 @@ body.light-mode
     }
 
 
-    /* ============================================
-       SET THEME
-    ============================================ */
+    /* =================================================
+       THEME
+    ================================================= */
 
     function setTheme() {
 
@@ -2566,10 +2609,6 @@ body.light-mode
     }
 
 
-    /* ============================================
-       THEME CLICK
-    ============================================ */
-
     themeToggle
         .addEventListener(
             "click",
@@ -2586,9 +2625,9 @@ body.light-mode
         );
 
 
-    /* ============================================
-       KEYBOARD SUPPORT
-    ============================================ */
+    /* =================================================
+       KEYBOARD
+    ================================================= */
 
     document
         .addEventListener(
@@ -2600,10 +2639,6 @@ body.light-mode
                     event.key;
 
 
-                /*
-                   Numbers / decimal
-                */
-
                 if (
                     /^[0-9.]$/
                     .test(
@@ -2611,15 +2646,12 @@ body.light-mode
                     )
                 ) {
 
+
                     inputValue(
                         key
                     );
                 }
 
-
-                /*
-                   Operators
-                */
 
                 if (
                     [
@@ -2633,24 +2665,17 @@ body.light-mode
                     )
                 ) {
 
+
                     inputValue(
                         key
                     );
                 }
 
 
-                /*
-                   Enter
-                */
-
                 if (
-                    key ===
-                    "Enter"
-
+                    key === "Enter"
                     ||
-
-                    key ===
-                    "="
+                    key === "="
                 ) {
 
 
@@ -2664,13 +2689,8 @@ body.light-mode
                 }
 
 
-                /*
-                   Backspace
-                */
-
                 if (
-                    key ===
-                    "Backspace"
+                    key === "Backspace"
                 ) {
 
 
@@ -2716,13 +2736,8 @@ body.light-mode
                 }
 
 
-                /*
-                   ESC clears everything
-                */
-
                 if (
-                    key ===
-                    "Escape"
+                    key === "Escape"
                 ) {
 
 
@@ -2749,11 +2764,6 @@ body.light-mode
                     showLiveExpression();
                 }
 
-
-                /*
-                   Physical keyboard
-                   button animation
-                */
 
                 buttons
                     .forEach(
@@ -2813,9 +2823,7 @@ body.light-mode
         );
 
 
-    /* ============================================
-       INITIAL SCREEN
-    ============================================ */
+    /* INITIALIZE */
 
     showLiveExpression();
 
@@ -2823,7 +2831,6 @@ body.light-mode
 })();
 
 </script>
-
 
 </body>
 </html>
