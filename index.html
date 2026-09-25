@@ -1,40 +1,95 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Simple iOS Calculator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aesthetic 3D Calculator</title>
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-<div class="calculator">
-    <div id="display">0</div>
+  <div class="calculator">
 
-    <div class="buttons">
-        <button class="gray" onclick="clearDisplay()">C</button>
-        <button class="gray" onclick="append('%')">%</button>
-        <button class="orange" onclick="append('/')">÷</button>
-        <button class="orange" onclick="append('*')">×</button>
+    <div class="display">
 
-        <button onclick="append('7')">7</button>
-        <button onclick="append('8')">8</button>
-        <button onclick="append('9')">9</button>
-        <button class="orange" onclick="append('-')">−</button>
+      <div class="theme-icon-wrap">
+        <div id="themeIcon" class="moon-shape"></div>
+      </div>
 
-        <button onclick="append('4')">4</button>
-        <button onclick="append('5')">5</button>
-        <button onclick="append('6')">6</button>
-        <button class="orange" onclick="append('+')">+</button>
+      <div class="display-content">
 
-        <button onclick="append('1')">1</button>
-        <button onclick="append('2')">2</button>
-        <button onclick="append('3')">3</button>
-        <button class="orange" onclick="calculate()">=</button>
+        <div
+          id="expressionHistory"
+          class="expression-history"
+        ></div>
 
-        <button class="zero" onclick="append('0')">0</button>
-        <button onclick="append('.')">.</button>
+        <div class="display-line"></div>
+
+        <div
+          id="mainDisplay"
+          class="main-display"
+        >
+          0
+        </div>
+
+      </div>
+
     </div>
-</div>
 
-<script src="script.js"></script>
+
+    <div class="mode-row">
+
+      <button
+        id="themeToggle"
+        class="toggle"
+        type="button"
+        aria-label="Switch to light mode"
+        aria-pressed="false"
+      >
+        <span class="toggle-knob"></span>
+        <span class="toggle-indicator"></span>
+      </button>
+
+      <div
+        id="modeLabel"
+        class="mode-label"
+      >
+        Light mode
+      </div>
+
+    </div>
+
+
+    <div class="keypad">
+
+      <button class="key" data-value="1">1</button>
+      <button class="key" data-value="2">2</button>
+      <button class="key" data-value="3">3</button>
+      <button class="key operation" data-value="/">÷</button>
+
+      <button class="key" data-value="4">4</button>
+      <button class="key" data-value="5">5</button>
+      <button class="key" data-value="6">6</button>
+      <button class="key operation" data-value="*">×</button>
+
+      <button class="key" data-value="7">7</button>
+      <button class="key" data-value="8">8</button>
+      <button class="key" data-value="9">9</button>
+      <button class="key operation" data-value="-">−</button>
+
+      <button class="key" data-value="0">0</button>
+      <button class="key" data-value=".">.</button>
+      <button class="key equals" data-value="=">=</button>
+      <button class="key operation" data-value="+">+</button>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
 </body>
 </html>
